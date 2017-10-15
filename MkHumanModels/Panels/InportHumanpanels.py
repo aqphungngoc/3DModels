@@ -24,7 +24,22 @@ class importHumanPanel(bpy.types.Panel):
         # row.prop(obj, "name")
 
         row = layout.row()
-        row.operator('object.importfbx', text = 'Import Human Models')
+        row.operator('object.importfbxmodel', text = 'Import Human Models')
+        row = layout.row()
+        row.operator('object.importfbxcloth', text = 'Import Cloth')
+
+        # row = layout.row()
+        # row.operator('object.s1', text = 'Import Anim Data')
+        # row = layout.row()
+        # row.operator('object.s2', text = 'Enable Motion Tracking')
+        # row = layout.row()
+        # row.operator('object.s3', text = 'Make Pingroup')
+        # row = layout.row()
+        # row.operator('object.s4', text = 'Enable Cloth Sims')
+        # row = layout.row()
+        # row.operator('object.s5', text = 'Save Cloth Anim Data')
+        # row = layout.row()
+        # row.operator('object.s5', text = 'Export All')
 
 
 def register():

@@ -24,7 +24,7 @@ class importHumanPanel(bpy.types.Panel):
         # row.prop(obj, "name")
 
         row = layout.row()
-        row.operator('mesh.primitive_cube_add', text = 'Import Human Models')
+        row.operator('object.importfbx', text = 'Import Human Models')
 
 
 def register():

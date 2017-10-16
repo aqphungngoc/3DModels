@@ -1,0 +1,29 @@
+Báo cáo xây dựng mô hình người hoàn chỉnh bằng Blender
+ 
+A.Các chuẩn chung về môi trường và mô hình
+….
+Môi trường:
+Đơn vị
+Khung xương:
+Định dạng file .bvh
+Theo chuẩn ….
+Mô hình người 3D:
+Lấy theo chuẩn makehuman
+...
+Cloths:
+Kèm theo file ảnh texture
+...
+
+B.Cách thực hiện
+1. Ghép mô hình người 3D với khung xương
+
+Lấy từ make human
+
+2. Dán ảnh chất liệu (texturing)
+
+
+
+3. Chi tiết về Cloth Simulation
+
+
+Các thuộc tính cơ bản

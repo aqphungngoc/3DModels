@@ -30,16 +30,19 @@ class importHumanPanel(bpy.types.Panel):
         row = layout.row()
         row.operator('object.importbvhanimdata', text = 'Import Anim Data')
         
-        # row = layout.row()
-        # row.operator('object.s2', text = 'Enable Motion Tracking')
-        # row = layout.row()
-        # row.operator('object.s3', text = 'Make Pingroup')
-        # row = layout.row()
-        # row.operator('object.s4', text = 'Enable Cloth Sims')
-        # row = layout.row()
-        # row.operator('object.s5', text = 'Save Cloth Anim Data')
-        # row = layout.row()
-        # row.operator('object.s5', text = 'Export All')
+        row = layout.row()
+        row.label(text="Working!", icon='WORLD_DATA')
+        
+        row = layout.row()
+        row.operator('object.move_x', text = 'Enable Motion Tracking')
+        row = layout.row()
+        row.operator('object.move_x', text = 'Make Pingroup')
+        row = layout.row()
+        row.operator('object.move_x', text = 'Enable Cloth Sims')
+        row = layout.row()
+        row.operator('object.move_x', text = 'Save Cloth Anim Data')
+        row = layout.row()
+        row.operator('object.move_x', text = 'Export All')
 
 
 def register():

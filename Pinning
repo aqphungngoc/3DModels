@@ -1,0 +1,143 @@
+Pinning Clothing To An Armature
+Clothing can be simulated and pinned to an armature. For example, a character could have a baggy tunic pinned to the character’s waist with a belt.
+
+The typical workflow for pinning:
+
+Set the armature to its bind pose.
+Model clothing that encloses but does not penetrate the character’s mesh.
+Parent the clothing objects to the armature. The armature will now have several child meshes bound to it.
+Create a new vertex group on each cloth object for its pinned vertices
+Add vertexes to be pinned to this vertex group and give these vertices non-zero weights (you probably want weight = 1). For example the belt area of the tunic would be in the vertex group and have weight one.
+Designate the clothing objects as “cloth” in the Physics tab of the Properties editor. Make sure the Cloth Modifier is below the Armature Modifier in the modifier stack.
+press the Pinning of Cloth button in the Cloth panel and select the vertex group.
+Designate the character’s mesh as “collision” object in the Physics tab of the Properties editor.
+The clothing is now ready. Non-pinned vertices will be under control of the Cloth modifier. Pinned vertices will be under control of the Armature modifier.
+Dynamic Mesh
+Dynamic Mesh allows animating the rest shape of cloth using shape keys or modifiers (e.g. an Armature modifier or any deformation modifier) placed above the Cloth modifier. When it is enabled, the rest shape is recalculated every frame, allowing unpinned cloth to squash and stretch following the character with the help of shape keys or modifiers, but otherwise move freely under control of the physics simulation.
+
+Normally cloth uses the state of the object in the first frame to compute the natural rest shape of the cloth, and keeps that constant throughout the simulation. This is reasonable for fully realistic scenes, but does not quite work for clothing on cartoon style characters that use a lot of squash and stretch.
+
+Cloth Stiffness Scaling
+Structural Stiffness
+Defines a vertex group to control over structural stiffness.
+Maximum
+Maximum structural stiffness value.
+Bending Stiffness
+Defines a vertex croup to control over bending stiffness.
+Maximum
+Maximum structural bending value.
+Cloth Sewing Springs
+Another method of restraining cloth similar to pinning is sewing springs. Sewing springs are virtual springs that pull vertices in one part of a cloth mesh toward vertices in another part of the cloth mesh. This is different from pinning which binds vertices of the cloth mesh in place or to another object. A clasp on a cloak could be created with a sewing spring. The spring could pull two corners of a cloak about a character’s neck. This could result in a more realistic simulation than pinning the cloak to the character’s neck since the cloak would be free to slide about the character’s neck and shoulders.
+
+Sewing springs are created by adding extra edges to a cloth mesh that are not included in any faces. They should connect vertices in the mesh that should be pulled together. For example the corners of a cloak.
+
+To activate the springs, enable the Cloth Sewing Springs panel.
+
+Options
+Sewing Force
+Maximum force that can be applied by sewing springs. Zero means unbounded, but it is not recommended to leave the field at zero in most cases, as it can cause instability due to extreme forces in the initial frames where the ends of the sewing springs are far apart.
+Shrinking
+The Cloth Sewing Springs panel also contains controls for shrinking the actual cloth faces.
+
+Shrinking Group
+Vertex group that is used to vary the intensity of the shrinking effect over the cloth.
+Min
+Fraction of the size to shrink the cloth by around vertices with weight 0 (or those not in vertex group.) The value 0.01 means shrink by 1% etc.
+Max
+Fraction of the size to shrink the cloth by around vertices with weight 1.
+Like unbounded sewing forces, immediately applying a large amount of shrink can cause instability, so it is advisable to keyframe these fields and ease in from 0 during draping.
+
+Cloth Field Weights
+As other physics dynamics systems, Cloth simulation also are influenced external force effectors.
+Collisions
+In most cases, a piece of cloth does not just hang there in 3D space, it collides with other objects in the environment. To ensure proper simulation, there are several items that have to be set up and working together:
+
+The Cloth object must be told to participate in collisions.
+Optionally (but recommended) tell the cloth to collide with itself.
+Other objects must be visible to the Cloth object via shared layers.
+The other objects must be mesh objects.
+The other objects may move or be themselves deformed by other objects (like an armature or shape key).
+The other mesh objects must be told to deflect the cloth object.
+The blend-file must be saved in a directory so that simulation results can be saved.
+You then Bake the simulation. The simulator computes the shape of the cloth for a frame range.
+You can then edit the simulation results, or make adjustments to the cloth mesh, at specific frames.
+You can make adjustments to the environment or deforming objects, and then re-run the cloth simulation from the current frame forward.
+Collision Settings
+../../../_images/physics_cloth_settings_collisions_panel.png
+Cloth Collisions panel.
+
+Now you must tell the Cloth object that you want it to participate in collisions. For the cloth object, locate the Cloth Collision panel, shown to the right:
+
+Quality
+A general setting for how fine and good a simulation you wish. Higher numbers take more time but ensure less tears and penetrations through the cloth.
+Distance
+As another object gets this close to it (in Blender Units), the simulation will start to push the cloth out of the way.
+Repel
+Repulsion force to apply when cloth is close to colliding.
+Repel Distance
+Maximum distance to apply repulsion force. Must be greater than minimum distance.
+Friction
+A coefficient for how slippery the cloth is when it collides with the mesh object. For example, silk has a lower coefficient of friction than cotton.
+Self-collisions
+Real cloth cannot permeate itself, so you normally want the cloth to self-collide.
+
+Enable Self Collisions
+Click this to tell the cloth object that it should not penetrate itself. This adds to simulation compute time, but provides more realistic results. A flag, viewed from a distance does not need this enabled, but a close-up of a cape or blouse on a character should have this enabled.
+Quality
+For higher self-collision quality just increase the Quality and more self collision layers can be solved. Just keep in mind that you need to have at least the same Collision Quality value as the Quality value.
+Distance
+If you encounter problems, you could also change the Min Distance value for the self-collisions. The best value is 0.75; for fast things you better take 1.0. The value 0.5 is quite risky (most likely many penetrations) but also gives some speedup.
+Regression blend-file: Cloth selfcollisions.
+
+Shared Layers
+Suppose you have two objects: a pair of Pants on layers 2 and 3, and your Character mesh on layers 1 and 2. You have enabled the Pants as cloth as described above. You must now make the Character “visible” to the Cloth object, so that as your character bends its leg, it will push the cloth. This principle is the same for all simulations; simulations only interact with objects on a shared layer. In this example, both objects share layer 2.
+
+To view/change an object’s layers, RMB click to select the object in Object Mode in the 3D View. M to bring up the “Move Layers” pop-up, which shows you all the layers that the object is on. To put the object on a single layer, LMB click the layer button. To put the object on multiple layers, Shift-LMB the layer buttons. To remove an object from a selected layer, simply Shift-LMB the layer button again to toggle it.
+
+Mesh Objects Collide
+If your colliding object is not a mesh object, such as a NURBS surface, or text object, you must convert it to a mesh object. To do so, select the object in object mode, and in the 3D View header, select Object ‣ Convert Object Type Alt-C, and select Mesh from the pop-up menu.
+
+Cloth - Object collisions
+../../../_images/physics_collision.png
+Collision settings.
+
+The cloth object needs to be deflected by some other object. To deflect a cloth, the object must be enabled as an object that collides with the cloth object. To enable Cloth - Object collisions, you have to enable deflections on the collision object (not on the cloth object).
+
+In the Properties editor, Object tab and Physics tab, locate the Collision panel shown to the right. It is also important to note that this collision panel is used to tell all simulations that this object is to participate in colliding/deflecting other objects on a shared layer (particles, soft bodies, and cloth).
+
+Warning
+
+There are three different Collision panels, all found in the Physics tab. The first (by default), a tab beside the Fields panel, is the one needed here. The second panel, a tab in the Soft Body group, concern softbodies (and so has nothing to do with cloth). And we have already seen the last one, by default a tab beside the Cloth panel.
+Mesh Object Modifier Stack
+../../../_images/physics_cloth_settings_collitions_stack.jpg
+Collision stack.
+
+The object’s shape deforms the cloth, so the cloth simulation must know the “true” shape of that mesh object at that frame. This true shape is the basis shape as modified by shape keys or armatures. Therefore, the Collision Modifier must be after any of those. The image to the right shows the Modifiers panel for the Character mesh object (not the cloth object).
+
+Cloth Cache
+Cache settings for cloth are the same as with other dynamic systems. See Particle Cache for details.
+
+Bake Collision
+../../../_images/physics_cloth_settings_collitions_bake.jpg
+After Baking.
+
+After you have set up the deflection mesh for the frame range you intend to run the simulation (including animating that mesh via armatures), you can now tell the cloth simulation to compute (and avoid) collisions. Select the cloth object and in the Object tab, Physics tab, set the Start and End settings for the simulation frames you wish to compute, and click the Bake button.
+
+You cannot change Start or End without clearing the bake simulation. When the simulation has finished, you will notice you have the option to free the bake, edit the bake and re-bake:
+
+There are a few things you will probably notice right away. First, it will bake significantly slower than before, and it will probably clip through the box pretty badly as in the picture on the right.
+
+Editing the cached simulation
+The cache contains the shape of the mesh at each frame. You can edit the cached simulation, after you have baked the simulation and pressed the Bake Editing button. Just go to the frame you want to fix and Tab into Edit Mode. There you can move your vertices using all of Blender’s mesh shaping tools. When you exit, the shape of the mesh will be recorded for that frame of the animation. If you want Blender to resume the simulation using the new shape going forward, LMB click Rebake from next Frame and play the animation. Blender will then pick up with that shape and resume the simulation.
+
+Edit the mesh to correct minor tears and places where the colliding object has punctured the cloth.
+
+If you add, delete, extrude, or remove vertices in the mesh, Blender will take the new mesh as the starting shape of the mesh back to the first frame of the animation, replacing the original shape you started with, up to the frame you were on when you edited the mesh. Therefore, if you change the content of a mesh, when you Tab out of Edit Mode, you should unprotect and clear the cache so that Blender will make a consistent simulation.
+
+Troubleshooting
+If you encounter some problems with collision detection, there are two ways to fix them:
+
+The fastest solution is to increase the Min Distance setting under the Cloth Collision panel. This will be the fastest way to fix the clipping; however, it will be less accurate and will not look as good. Using this method tends to make it look like the cloth is resting on air, and gives it a very rounded look.
+A second method is to increase the Quality (in the first Cloth panel). This results in smaller steps for the simulator and therefore to a higher probability that fast-moving collisions get caught. You can also increase the Collision Quality to perform more iterations to get collisions solved.
+If none of the methods help, you can easily edit the cached/baked result in Edit Mode afterwards.
+The Cloth is torn by the deforming mesh – he “Hulks Out”: Increase its structural stiffness (Structure Stiffness setting, Cloth panel), very high, like 1000.

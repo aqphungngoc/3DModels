@@ -8,7 +8,7 @@ def main(context):
 class importFBXfile(Operator):
     """Tooltip"""
     bl_idname = "object.importbvhanimdata"
-    bl_label = "Import Human Model"
+    bl_label = "Import Human Skeleton"
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod

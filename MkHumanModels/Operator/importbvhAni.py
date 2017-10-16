@@ -2,13 +2,13 @@ import bpy
 from bpy.types import Operator
 
 def main(context):
-    bpy.ops.import_scene.fbx(filepath= "//home//aqphungngoc//Git//3DModels//MkHumanModels//Input//dress.fbx")
-    #bpy.ops.import_anim.bvh(filepath= "C:\\Users\\aqphu\\Desktop\\3Dbuilt\\3DModels\\MkHumanModels\\Input\\Dance Step3.bvh")
+    
+    bpy.ops.import_anim.bvh(filepath= "//home//aqphungngoc//Git//3DModels//MkHumanModels//Input//Dance Step3.bvh")
 
 class importFBXfile(Operator):
     """Tooltip"""
-    bl_idname = "object.importfbxcloth"
-    bl_label = "Import Cloth"
+    bl_idname = "object.importbvhanimdata"
+    bl_label = "Import Human Model"
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod

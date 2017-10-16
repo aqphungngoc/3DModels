@@ -3,7 +3,6 @@ from bpy.types import Operator
 
 def main(context):
     bpy.ops.import_scene.fbx(filepath= "//home//aqphungngoc//Git//3DModels//MkHumanModels//Input//femaletestcm.fbx")
-    #bpy.ops.import_anim.bvh(filepath= "C:\\Users\\aqphu\\Desktop\\3Dbuilt\\3DModels\\MkHumanModels\\Input\\Dance Step3.bvh")
 
 class importFBXfile(Operator):
     """Tooltip"""

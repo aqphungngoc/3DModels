@@ -27,9 +27,9 @@ class importHumanPanel(bpy.types.Panel):
         row.operator('object.importfbxmodel', text = 'Import Human Models')
         row = layout.row()
         row.operator('object.importfbxcloth', text = 'Import Cloth')
-
-        # row = layout.row()
-        # row.operator('object.s1', text = 'Import Anim Data')
+        row = layout.row()
+        row.operator('object.importbvhanimdata', text = 'Import Anim Data')
+        
         # row = layout.row()
         # row.operator('object.s2', text = 'Enable Motion Tracking')
         # row = layout.row()

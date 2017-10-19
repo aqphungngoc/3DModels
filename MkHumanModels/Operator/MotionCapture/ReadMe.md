@@ -1,0 +1,1 @@
+code de tham khao, day la addon co san trong blender khong can dua vao chay

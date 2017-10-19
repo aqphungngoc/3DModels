@@ -13,15 +13,12 @@ class importHumanPanel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
 
-        #obj = context.object
+        
 
         row = layout.row()
         row.label(text="Import Human", icon='WORLD_DATA')
 
-        # row = layout.row()
-        # row.label(text="Active object is: " + obj.name)
-        # row = layout.row()
-        # row.prop(obj, "name")
+        
 
         row = layout.row()
         row.operator('object.importfbxmodel', text = 'Import Human Models')
@@ -33,6 +30,13 @@ class importHumanPanel(bpy.types.Panel):
         row = layout.row()
         row.label(text="Working!", icon='WORLD_DATA')
         
+        obj = context.object
+        rowa = layout.row()
+        rowa.label(text="Active object is: " + obj.name)
+        rowa = layout.row()
+        rowa.prop(obj, "name")
+
+
         row = layout.row()
         row.operator('object.move_x', text = 'Enable Motion Tracking')
         row = layout.row()

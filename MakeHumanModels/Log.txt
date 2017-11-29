@@ -1,0 +1,13 @@
+#creating pin group
+#tru?c h?t c?n t?o nhóm c?n ghim qu?n áo l?i trong eidt mode
+
+bpy.ops.object.vertex_group_add()
+bpy.context.object.active_index = 0
+bpy.context.object.name = "Pin"
+bpy.ops.mesh.select_all(action='TOGGLE')
+bpy.ops.object.vertex_group_select()
+bpy.ops.mesh.select_all(action='TOGGLE')
+bpy.context.space_data.viewport_shade = 'SOLID'
+bpy.context.scene.frame_end = 60
+
+# Clothsim

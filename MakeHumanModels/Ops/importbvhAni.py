@@ -1,14 +1,15 @@
 import bpy
 from bpy.types import Operator
+from bpy_extras.io_utils import ImportHelper
 
-def main(context):
-    context.operator('import_scene.fbx')
+def main(context, filepath):
     
+    bpy.ops.import_anim.bvh(filepath)
 
-class importFBXfile(Operator):
+class importFBXfile(Operator, ImportHelper):
     """Tooltip"""
-    bl_idname = "object.importfbxcloth"
-    bl_label = "Import Cloth"
+    bl_idname = "object.importbvhanimdata"
+    bl_label = "Import Human Skeleton"
     bl_options = {'REGISTER', 'UNDO'}
 
     @classmethod
@@ -16,8 +17,8 @@ class importFBXfile(Operator):
     def poll(cls, context):  
         return true
     # Ham thi hanh phuong thuc dieu khien tien trinh
-    def execute(self, context):
-        main(context)
+    def execute(self, self.filepath, context):
+        main(context, self.filepath)
         return {'FINISHED'}
 
 def register():
